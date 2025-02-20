@@ -4,8 +4,9 @@ const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 // 🚀 Google Login
 document.getElementById("login-btn")?.addEventListener("click", async () => {
-    let { user, error } = await supabase.auth.signInWithOAuth({ provider: "google" });
-    if (error) console.log("Login Error", error);
+    const { data, error } = await supabase.auth.signInWithOAuth({ provider: "google" });
+    if (error) console.error("Login Error:", error);
+    else console.log("Login Successful:", data);
 });
 
 // 🔒 Get Authenticated User
