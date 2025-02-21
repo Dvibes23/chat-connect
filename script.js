@@ -1,6 +1,6 @@
 // ✅ Supabase Configuration
 const supabaseUrl = "https://qcghfirmzxskrunrkwzf.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjZ2hmaXJtenhza3J1bnJrd3pmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAwNjY2OTgsImV4cCI6MjA1NTY0MjY5OH0.KKHUcku6UWOtoBnCIjJkI8sqwG2UFsaiDHXQrX9vUuk"; // Replace with your actual Supabase anon key
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjZ2hmaXJtenhza3J1bnJrd3pmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAwNjY2OTgsImV4cCI6MjA1NTY0MjY5OH0.KKHUcku6UWOtoBnCIjJkI8sqwG2UFsaiDHXQrX9vUuk"; 
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 // ✅ Google Login & Save User
@@ -35,7 +35,7 @@ async function saveUserAfterLogin() {
     // Check if user already exists in database
     let { data, error: fetchError } = await supabase
         .from("users")
-        .select("*")
+        .select("id")
         .eq("id", user.id)
         .single();
 
@@ -45,7 +45,7 @@ async function saveUserAfterLogin() {
             .from("users")
             .insert([
                 {
-                    id: user.id,
+                    id: user.id, // Supabase expects a valid UUID
                     username: user.email.split("@")[0], // Use email name as default username
                     bio: "New user", // Default bio
                     profile_pic: "" // No profile pic yet
